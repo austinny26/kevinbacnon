@@ -1,7 +1,5 @@
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
+
+import java.util.*;
 
 public class ActorNetworkImp implements ActorNetwork {
 
@@ -10,8 +8,17 @@ public class ActorNetworkImp implements ActorNetwork {
 
     @Override
     public Collection<String> findActor(String movie) {
-        return relationships.get(actorName);
+        Collection<String> actors = new ArrayList<>();
+
+        for (Map.Entry<String, Collection<String>> entry : relationships.entrySet()) {
+            if (entry.getValue().contains(movie)) {
+                actors.add(entry.getKey());
+            }
+        }
+
+        return actors;
     }
+
 
     public Collection<String> findMovie(String actorName) {
         return relationships.get(actorName);
@@ -44,11 +51,5 @@ public class ActorNetworkImp implements ActorNetwork {
         relationships.get(actorName).add(workedWithName);
         relationships.get(workedWithName).add(actorName);
     }
-
-    @Override
-    public void addWorkedWithMovie(String workedWithName, List<String> movie) {
-        relationships.get(workedWithName);
-    }
-
 
 }
